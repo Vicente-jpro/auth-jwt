@@ -1,5 +1,5 @@
 package com.example.authjwt.enums;
 
 public enum RoleEnum {
-    ADMIN, USER
+    ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_USER, ROLE_MANAGER 
 }

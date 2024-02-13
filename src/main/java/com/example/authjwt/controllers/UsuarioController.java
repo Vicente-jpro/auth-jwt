@@ -32,14 +32,13 @@ public class UsuarioController {
     @PostMapping("/users")
     public ResponseEntity<UsuarioResponse> salvar(@RequestBody UsuarioRequest usuarioRequest){
        log.info("Salvar usuario.");
-        UsuarioResponse resp = usuarioService.salvar(usuarioRequest);
-        return ResponseEntity.ok(resp);
+        return ResponseEntity.ok().body(usuarioService.salvar(usuarioRequest));
     }
 
     @GetMapping("/users")
     public ResponseEntity<List<UsuarioResponse>> lsitar(){
         log.info("Listar usuário.");
-        return ResponseEntity.ok(usuarioService.listarTodos());
+        return ResponseEntity.ok().body(usuarioService.listarTodos());
     }
 
     

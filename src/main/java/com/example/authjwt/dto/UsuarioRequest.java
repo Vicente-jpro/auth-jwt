@@ -12,7 +12,6 @@ import lombok.Data;
 @Builder
 public class UsuarioRequest {
 
- private Long id;
  private String name;
  private String username;
  private String password;
