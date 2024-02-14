@@ -61,7 +61,7 @@ public class UsuarioService implements UserDetailsService{
         Usuario usuario = this.getUserByUsername(username);
         UserDetails user = User.builder()
             .password(usuario.getPassword())
-            .roles(usuario.getRoles().toString())
+            .roles(usuario.getRoles().name())
             .username(usuario.getUsername())
             .build();
         return user;
