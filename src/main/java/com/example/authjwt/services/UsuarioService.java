@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.authjwt.dto.UsuarioRequest;
 import com.example.authjwt.dto.UsuarioResponse;
@@ -17,8 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService{
     private final UsuarioRepository usuarioRepository;
 
 
@@ -49,5 +54,16 @@ public class UsuarioService {
         return usuarioRepository.findByUsername(username)
                                 .orElseThrow(
                                     ()-> new UsernameNotFoundException("Usuario não encontrado"));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario usuario = this.getUserByUsername(username);
+        UserDetails user = User.builder()
+            .password(usuario.getPassword())
+            .roles(usuario.getRoles().toString())
+            .username(usuario.getUsername())
+            .build();
+        return user;
     }
 }

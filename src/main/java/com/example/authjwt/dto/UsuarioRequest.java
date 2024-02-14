@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import com.example.authjwt.enums.RoleEnum;
 
-import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Data;
 
