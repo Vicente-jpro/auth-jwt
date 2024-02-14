@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,13 +26,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class UsuarioService implements UserDetailsService{
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder; 
 
 
     public UsuarioResponse salvar(UsuarioRequest usuarioReq){
         log.info("Salvando o usuario...");
         Usuario usuario = new Usuario();
         BeanUtils.copyProperties(usuarioReq, usuario);
-
+        usuario.setPassword( passwordEncoder.encode(usuario.getPassword()));
+        
         Usuario usuarioSlavo =  usuarioRepository.save(usuario);
 
         UsuarioResponse usuarioResponse = new UsuarioResponse();
